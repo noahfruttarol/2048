@@ -171,7 +171,7 @@ namespace _2048{
         {   
             for (int col = 0; col < Size; col++)
             {   //loop to go over each column
-                for (int i = Size - 1; i >= 0; i--)//i to keep track of witch row has been moved
+                for (int i = Size - 2; i >= 0; i--)//i to keep track of witch row has been moved
                 {   //loop that covers each block up 1 from the bottom 
                     int k = i;//k to keep track of the block to move down
                     for (int j = i + 1; j < Size; j++)//j keeps track of block being merged with
@@ -207,7 +207,7 @@ namespace _2048{
         { 
             for (int row = 0; row < Size; row++)
             {   //loop to go over each row
-                for (int i = Size - 1; i >= 0; i--)
+                for (int i = Size - 2; i >= 0; i--)
                 {   //loop that covers each block left 1 from the right
                     int k = i;//k to keep track of the block to move right
                     for (int j = i + 1; j < Size; j++)//j keeps track of block being merged with
