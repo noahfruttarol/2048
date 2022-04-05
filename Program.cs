@@ -76,19 +76,35 @@ namespace _2048{
         //constructs with defalt size of 4
         public borad()
         {
+            turns = 0;
             Size = 4;
             end = 2048;
             blocks = new block[Size, Size];
+            for (int i = 0; i < Size; i++)
+            {
+                for (int j = 0; j < Size; j++)
+                {
+                    blocks[i, j] = new block();
+                }
+            }
         }
 
         //constructs with size of input
         public borad(int input)
         {
+            turns = 0;
             if(input < 3 || input > 8) //borad is too small at 2 and would be too big at 9
                 throw new ArgumentOutOfRangeException("size too big should be between 3 and 8");
             Size = input;
             end = 2048;
             blocks = new block[Size, Size];
+            for (int i = 0; i < Size; i++)
+            {
+                for (int j = 0; j < Size; j++)
+                {
+                    blocks[i, j] = new block();
+                }
+            }
         }
 
         //this is the length and hight of the borad
@@ -100,16 +116,148 @@ namespace _2048{
         //holds all the blocks in the borad
         private block[,] blocks { get; set; }
 
+        //number of turns 
+        private int turns { get; set; }
+
         //starts the game
         public void start()
         {
-
+            Console.WriteLine("Starting game with {0} X {0} borad", Size);//starting text
+            Console.WriteLine("Rules: w = up, s = down, a = left, d = right");//rules
+            Console.WriteLine("Good Luck");
+            new_turn();//sets up borad with a block spawn
+            print_borad();
+            bool game_runing = true;//to see if the game is still in a valid state
+            while (game_runing)
+            {
+                bool move_happend = true;//for if the wrong key is presed 
+                Console.WriteLine("What is your next move?");
+                string s = Console.ReadLine();//gets input
+                char c = 'l';//incase no input
+                if (s.Length != 0)
+                    c = s[0];//sets c to input if there is any
+                switch(c){
+                    case 'w':
+                        up();
+                        break;
+                    case 's':
+                        down();
+                        break;
+                    case 'a':
+                        left();
+                        break;
+                    case 'd':
+                        right();
+                        break;
+                    default:
+                        Console.WriteLine("Enter only a 'w', 'a', 's' or 'd'");
+                        move_happend = false;
+                        break;
+                }
+                if (move_happend == false)
+                {
+                    Console.Write("So, ");//invalid input skips does not add a turn
+                    continue;
+                }
+                turns++;
+                game_runing = new_turn(); //checks for end states and spawns new block
+                if(game_runing)
+                    print_borad();
+            }
         }
 
         //ends the game if 0 the player gets a block to the end amount or 1 if the borad is filled after the player made there turn
         private void finish(int ending)
         {
+            print_borad();
+            if (ending == 1)
+            {
+                Console.WriteLine("Borad filled, no more room for blocks. Better luck next time.");
+                return;//failed ending 
+            }
+            Console.WriteLine("Congrats you won in {0} turns, good job!", turns);//sucsess ending
+        }
 
+        //prints borad to console
+        private void print_borad()
+        {
+            Console.Write("_");
+            for (int i = 0; i < Size; i++)
+                Console.Write("_____");//prints top line
+            for (int i = 0; i < Size; i++)
+            {
+                print_row(i);
+            }
+        }
+
+        //prints row to console
+        private void print_row(int row) 
+        {
+            
+            Console.WriteLine();
+            Console.Write("|");//prints left most line
+            for (int i = 0; i < Size; i++)
+            {
+                set_color(row, i); //sets coulor of block
+                Console.Write("    |");
+            }
+            Console.ResetColor();
+            Console.WriteLine();
+            Console.Write("|");//next loop the same exsept adds value of block  
+            for (int i = 0; i < Size; i++)
+            {
+                set_color(row, i);
+                if(blocks[row, i].get_val() != 0)
+                    Console.Write("{0,-4}|", blocks[row, i].get_val());
+                else
+                    Console.Write("    |");//if empty block no number
+            }
+            Console.ResetColor();
+            Console.WriteLine();
+            Console.Write("|");
+            for (int i = 0; i < Size; i++)
+            {
+                set_color(row, i);
+                Console.Write("____|");//prints bottom of box
+            }
+            Console.ResetColor();
+            Console.WriteLine("");
+        }
+
+        private void set_color(int row, int col)
+        {
+            block temp = blocks[row, col];
+            switch (temp.get_val())//sets color based on value of block
+            {
+                case 0:
+                    Console.ResetColor();
+                    return;
+                case 2:
+                    Console.BackgroundColor = ConsoleColor.DarkCyan;
+                    return;
+                case 4:
+                    Console.BackgroundColor = ConsoleColor.Cyan;
+                    return;
+                case 8:
+                    Console.BackgroundColor = ConsoleColor.Magenta;
+                    return;
+                case 16: 
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    return;
+                case 32:
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    return;
+                case 64:
+                    Console.BackgroundColor = ConsoleColor.DarkYellow;
+                    return;
+                case 2048:
+                    Console.BackgroundColor = ConsoleColor.Green;
+                    return;
+                default:
+                    Console.BackgroundColor = ConsoleColor.Yellow;
+                    return;
+
+            }
         }
 
         //resets been_merged in each block and spawns a new block on the borad
@@ -212,7 +360,7 @@ namespace _2048{
                     int k = i;//k to keep track of the block to move right
                     for (int j = i + 1; j < Size; j++)//j keeps track of block being merged with
                     {   //loop to keep moving the block right untill it cant be merged
-                        int temp = blocks[row, j].merg(ref blocks[row, j]);//merges block at column k with block right
+                        int temp = blocks[row, j].merg(ref blocks[row, k]);//merges block at column k with block right
                         if (temp == 0)//if temp is 0 then the block was not moved and there can no longer be a merg from block at column k
                             break;
                         k++;
@@ -228,15 +376,27 @@ namespace _2048{
         static int Main()
         {
             String program_name = "2048";
-            String vertion = "Pre 0.1";
+            String vertion = "Pre 1.0";
             String author = "Noah Fruttarol";
 
             Console.ForegroundColor = ConsoleColor.DarkBlue;
-            Console.WriteLine("{0} Vertion: {1} by {2}", program_name, vertion, author);
+            Console.WriteLine("{0} Vertion: {1} by {2}", program_name, vertion, author);//program info
             Console.ResetColor();
             Console.WriteLine();
 
 
+            Console.WriteLine("Give size of borad 3-8 otherwise 4");
+            int x = Convert.ToInt32(Console.ReadLine());
+            if (x >= 3 || x <= 8)
+            {
+                borad game = new borad(x);
+                game.start();
+            }
+            else//if invalid size use defalt
+            {
+                borad game = new borad();
+                game.start();
+            }
             return 0;
         }
     }
