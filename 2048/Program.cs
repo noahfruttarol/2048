@@ -132,22 +132,23 @@ namespace _2048{
             {
                 bool move_happend = true;//for if the wrong key is presed 
                 Console.WriteLine("What is your next move?");
-                string s = Console.ReadLine();//gets input
+                string? s = Console.ReadLine();//gets input
                 char c = 'l';//incase no input
-                if (s.Length != 0)
-                    c = s[0];//sets c to input if there is any
+                if(s != null)
+                    if (s.Length != 0)
+                        c = s[0];//sets c to input if there is any
                 switch(c){
                     case 'w':
-                        Up();
+                        move_happend = Up();
                         break;
                     case 's':
-                        Down();
+                        move_happend = Down();
                         break;
                     case 'a':
-                        Left();
+                        move_happend = Left();
                         break;
                     case 'd':
-                        Right();
+                        move_happend = Right();
                         break;
                     default:
                         Console.WriteLine("Enter only a 'w', 'a', 's' or 'd'");
@@ -156,7 +157,7 @@ namespace _2048{
                 }
                 if (move_happend == false)
                 {
-                    Console.Write("So, ");//invalid input skips does not add a turn
+                    Console.WriteLine("So, nothing moved");//invalid input or nothing moved skips does not add a turn
                     continue;
                 }
                 Turns++;
@@ -297,8 +298,9 @@ namespace _2048{
             return true;//returns true if game still going
         }
 
-        private void Up() 
-        { 
+        private bool Up() 
+        {   
+            bool moved = false;
             for(int col = 0; col < Size; col++)
             {   //loop to go over each column
                 for (int i = 1; i < Size; i++)//i to keep track of witch row has been moved
@@ -309,14 +311,17 @@ namespace _2048{
                         int temp = Blocks[j, col].Merg(ref Blocks[k, col]);//merges block at row k with block above 
                         if (temp == 0)//if temp is 0 then the block was not moved and there can no longer be a merg from block at row k
                             break;
+                        moved = true;
                         k--;
                     }
                 }
             }
+            return moved;
         }
 
-        private void Down()
-        {   
+        private bool Down()
+        {
+            bool moved = false;
             for (int col = 0; col < Size; col++)
             {   //loop to go over each column
                 for (int i = Size - 2; i >= 0; i--)//i to keep track of witch row has been moved
@@ -327,14 +332,17 @@ namespace _2048{
                         int temp = Blocks[j, col].Merg(ref Blocks[k, col]);//merges block at row k with block below
                         if (temp == 0)//if temp is 0 then the block was not moved and there can no longer be a merg from block at row k
                             break;
+                        moved = true;
                         k++;
                     }
                 }
             }
+            return moved;
         }
 
-        private void Left()
-        { 
+        private bool Left()
+        {
+            bool moved = false;
             for (int row = 0; row < Size; row++)
             {   //loop to go over each row
                 for (int i = 1; i < Size; i++)
@@ -346,13 +354,16 @@ namespace _2048{
                         if (temp == 0)//if temp is 0 then the block was not moved and there can no longer be a merg from block at column k
                             break;
                         k--;
+                        moved = true;
                     }
                 }
             }
+            return moved;
         }
 
-        private void Right()
-        { 
+        private bool Right()
+        {
+            bool moved = false;
             for (int row = 0; row < Size; row++)
             {   //loop to go over each row
                 for (int i = Size - 2; i >= 0; i--)
@@ -364,9 +375,11 @@ namespace _2048{
                         if (temp == 0)//if temp is 0 then the block was not moved and there can no longer be a merg from block at column k
                             break;
                         k++;
+                        moved = true;
                     }
                 }
             }
+            return moved;
         }
 
     }
