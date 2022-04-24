@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\noahf\\source\\repos\\2048\\2048\\2048.csproj": {}
+    "C:\\Users\\noahf\\2048\\2048\\2048.csproj": {}
   },
   "projects": {
-    "C:\\Users\\noahf\\source\\repos\\2048\\2048\\2048.csproj": {
+    "C:\\Users\\noahf\\2048\\2048\\2048.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\noahf\\source\\repos\\2048\\2048\\2048.csproj",
+        "projectUniqueName": "C:\\Users\\noahf\\2048\\2048\\2048.csproj",
         "projectName": "2048",
-        "projectPath": "C:\\Users\\noahf\\source\\repos\\2048\\2048\\2048.csproj",
+        "projectPath": "C:\\Users\\noahf\\2048\\2048\\2048.csproj",
         "packagesPath": "C:\\Users\\noahf\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\noahf\\source\\repos\\2048\\2048\\obj\\",
+        "outputPath": "C:\\Users\\noahf\\2048\\2048\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\noahf\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -58,7 +54,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

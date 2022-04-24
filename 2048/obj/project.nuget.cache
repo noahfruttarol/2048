@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "91Jo2+wkVMhIuElIG1+Fe+U0eEIZfK9EpebL4RbxE2ZN5Na927L1xGIt3A/rZKS/acmVL3tiI45XRq7KCm8+Sw==",
+  "dgSpecHash": "XMzEPzAUUR7RR2NTxLueRO8Awy00rhQ1DG1/Th97G80R3FTEcqZ5wcJmL4rLDxsfOgXDBm90dF5mvjOVIgZ3Zw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\noahf\\source\\repos\\2048\\2048\\2048.csproj",
+  "projectFilePath": "C:\\Users\\noahf\\2048\\2048\\2048.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
